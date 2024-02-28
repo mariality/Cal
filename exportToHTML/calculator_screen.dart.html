@@ -1,0 +1,288 @@
+<html>
+<head>
+<title>calculator_screen.dart</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #cc7832;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+calculator_screen.dart</font>
+</center></td></tr></table>
+<pre><span class="s0">// TODO Implement this library.</span>
+
+<span class="s1">import </span><span class="s2">'package:flutter/cupertino.dart'</span><span class="s3">;</span>
+<span class="s1">import </span><span class="s2">'package:flutter/material.dart'</span><span class="s3">;</span>
+
+<span class="s1">import </span><span class="s2">'button_values.dart'</span><span class="s3">;</span>
+
+
+<span class="s3">class </span><span class="s1">CalculatorScreen </span><span class="s3">extends </span><span class="s1">StatefulWidget {</span>
+  <span class="s3">const </span><span class="s1">CalculatorScreen({</span><span class="s3">super</span><span class="s1">.key})</span><span class="s3">;</span>
+
+  <span class="s1">@override</span>
+  <span class="s1">State&lt;CalculatorScreen&gt; createState() =&gt; _CalculatorScreenState()</span><span class="s3">;</span>
+<span class="s1">}</span>
+
+<span class="s3">class </span><span class="s1">_CalculatorScreenState </span><span class="s3">extends </span><span class="s1">State&lt;CalculatorScreen  &gt; {</span>
+  <span class="s1">String number1 = </span><span class="s2">&quot;&quot;</span><span class="s3">; </span><span class="s0">// . 0-9</span>
+  <span class="s1">String operand = </span><span class="s2">&quot;&quot;</span><span class="s3">; </span><span class="s0">// + - * /</span>
+  <span class="s1">String number2 = </span><span class="s2">&quot;&quot;</span><span class="s3">; </span><span class="s0">// . 0-9</span>
+
+  <span class="s1">@override</span>
+  <span class="s1">Widget build(BuildContext context) {</span>
+    <span class="s3">final </span><span class="s1">screenSize = MediaQuery</span>
+        <span class="s1">.of(context)</span>
+        <span class="s1">.size</span><span class="s3">;</span>
+    <span class="s3">return </span><span class="s1">Scaffold(</span>
+      <span class="s1">body: SafeArea(</span>
+        <span class="s1">bottom: </span><span class="s3">false,</span>
+        <span class="s1">child: Column(</span>
+          <span class="s1">children: [</span>
+            <span class="s0">// output</span>
+            <span class="s1">Expanded(</span>
+              <span class="s1">child: SingleChildScrollView(</span>
+                <span class="s1">reverse: </span><span class="s3">true,</span>
+                <span class="s1">child: Container(</span>
+                  <span class="s1">alignment: Alignment.bottomRight</span><span class="s3">,</span>
+                  <span class="s1">padding: </span><span class="s3">const </span><span class="s1">EdgeInsets.all(</span><span class="s4">16</span><span class="s1">)</span><span class="s3">,</span>
+                  <span class="s1">child: Text</span>
+                    <span class="s1">(</span><span class="s2">&quot;</span><span class="s1">$number1$operand$number2</span><span class="s2">&quot;</span><span class="s1">.isEmpty</span>
+                      <span class="s1">? </span><span class="s2">&quot;0&quot;</span>
+                      <span class="s1">: </span><span class="s2">&quot;</span><span class="s1">$number1$operand$number2</span><span class="s2">&quot;</span><span class="s3">,</span>
+                    <span class="s1">style: </span><span class="s3">const </span><span class="s1">TextStyle(</span>
+                      <span class="s1">fontSize: </span><span class="s4">48</span><span class="s3">,</span>
+                      <span class="s1">fontWeight: FontWeight.bold</span><span class="s3">,</span>
+                    <span class="s1">)</span><span class="s3">,</span>
+                    <span class="s1">textAlign: TextAlign.end</span><span class="s3">,</span>
+                  <span class="s1">)</span><span class="s3">,</span>
+                <span class="s1">)</span><span class="s3">,</span>
+              <span class="s1">)</span><span class="s3">,</span>
+            <span class="s1">)</span><span class="s3">,</span>
+            <span class="s0">//buttons</span>
+            <span class="s1">Wrap(</span>
+              <span class="s1">children: Btn.buttonValues</span>
+                  <span class="s1">.map(</span>
+                    <span class="s1">(value) =&gt;</span>
+                    <span class="s1">SizedBox(</span>
+                        <span class="s1">width: value == Btn.n0</span>
+                            <span class="s1">? screenSize.width / </span><span class="s4">2</span>
+                            <span class="s1">: (screenSize.width / </span><span class="s4">4</span><span class="s1">)</span><span class="s3">,</span>
+                        <span class="s1">height: screenSize.width / </span><span class="s4">5</span><span class="s3">,</span>
+                        <span class="s1">child: buildButton(value)</span>
+                    <span class="s1">)</span><span class="s3">,</span>
+              <span class="s1">)</span>
+                  <span class="s1">.toList()</span><span class="s3">,</span>
+            <span class="s1">)</span>
+
+          <span class="s1">]</span><span class="s3">,</span>
+        <span class="s1">)</span><span class="s3">,</span>
+      <span class="s1">)</span><span class="s3">,</span>
+    <span class="s1">)</span><span class="s3">;</span>
+  <span class="s1">}</span>
+
+  <span class="s0">//##########</span>
+  <span class="s1">Widget buildButton(value) {</span>
+    <span class="s3">return </span><span class="s1">Padding(</span>
+      <span class="s1">padding: </span><span class="s3">const </span><span class="s1">EdgeInsets.all(</span><span class="s4">4.0</span><span class="s1">)</span><span class="s3">,</span>
+      <span class="s1">child: Material(</span>
+        <span class="s1">color: getBtnColor(value)</span><span class="s3">,</span>
+        <span class="s1">clipBehavior: Clip.hardEdge</span><span class="s3">,</span>
+        <span class="s1">shape: OutlineInputBorder(</span>
+          <span class="s1">borderSide: </span><span class="s3">const </span><span class="s1">BorderSide(</span>
+            <span class="s1">color: Colors.white54</span><span class="s3">,</span>
+
+          <span class="s1">)</span><span class="s3">,</span>
+          <span class="s1">borderRadius: BorderRadius.circular(</span><span class="s4">100</span><span class="s1">)</span><span class="s3">,</span>
+        <span class="s1">)</span><span class="s3">,</span>
+        <span class="s1">child: InkWell(</span>
+          <span class="s1">onTap: () =&gt; onBtnTap(value)</span><span class="s3">,</span>
+          <span class="s1">child: Center(</span>
+            <span class="s1">child: Text(value</span><span class="s3">,</span>
+              <span class="s1">style: </span><span class="s3">const </span><span class="s1">TextStyle(fontWeight: FontWeight.bold</span><span class="s3">, </span><span class="s1">fontSize: </span><span class="s4">24</span><span class="s3">,</span>
+              <span class="s1">)</span><span class="s3">,</span>
+            <span class="s1">)</span><span class="s3">,</span>
+          <span class="s1">)</span><span class="s3">,</span>
+        <span class="s1">)</span><span class="s3">,</span>
+      <span class="s1">)</span><span class="s3">,</span>
+    <span class="s1">)</span><span class="s3">;</span>
+  <span class="s1">}</span>
+
+  <span class="s0">//########</span>
+  <span class="s3">void </span><span class="s1">onBtnTap(String value) {</span>
+    <span class="s3">if </span><span class="s1">(value == Btn.del) {</span>
+      <span class="s1">delete()</span><span class="s3">;</span>
+      <span class="s3">return;</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(value == Btn.clr) {</span>
+      <span class="s1">clearAll()</span><span class="s3">;</span>
+      <span class="s3">return;</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(value == Btn.per) {</span>
+      <span class="s1">convertToPercentage()</span><span class="s3">;</span>
+      <span class="s3">return;</span>
+    <span class="s1">}</span>
+    <span class="s3">if</span><span class="s1">(value == Btn.calculate) {</span>
+      <span class="s1">calculate()</span><span class="s3">;</span>
+      <span class="s3">return;</span>
+    <span class="s1">}</span>
+    <span class="s1">appendValue(value)</span><span class="s3">;</span>
+  <span class="s1">}</span>
+  <span class="s0">//############</span>
+  <span class="s0">//calculates the result</span>
+  <span class="s3">void </span><span class="s1">calculate(){</span>
+    <span class="s3">if</span><span class="s1">(number1.isEmpty) </span><span class="s3">return;</span>
+    <span class="s3">if</span><span class="s1">(operand.isEmpty) </span><span class="s3">return;</span>
+    <span class="s3">if</span><span class="s1">(number2.isEmpty) </span><span class="s3">return;</span>
+
+   <span class="s3">final </span><span class="s1">double num1 = double.parse(number1)</span><span class="s3">;</span>
+   <span class="s3">final </span><span class="s1">double num2 = double.parse(number2)</span><span class="s3">;</span>
+
+    <span class="s3">var </span><span class="s1">result = </span><span class="s4">0.0</span><span class="s3">;</span>
+    <span class="s3">switch </span><span class="s1">(operand) {</span>
+      <span class="s3">case </span><span class="s1">Btn.add:</span>
+        <span class="s1">result = num1 + num2</span><span class="s3">;</span>
+        <span class="s3">break;</span>
+      <span class="s3">case </span><span class="s1">Btn.subtract:</span>
+        <span class="s1">result = num1 - num2</span><span class="s3">;</span>
+        <span class="s3">break;</span>
+      <span class="s3">case </span><span class="s1">Btn.divide:</span>
+        <span class="s1">result = num1 / num2</span><span class="s3">;</span>
+        <span class="s3">break;</span>
+      <span class="s3">case </span><span class="s1">Btn.multiply:</span>
+        <span class="s1">result = num1 * num2</span><span class="s3">;</span>
+        <span class="s3">break;</span>
+      <span class="s3">default</span><span class="s1">:</span>
+    <span class="s1">}</span>
+    <span class="s1">setState(() {</span>
+      <span class="s1">number1 = </span><span class="s2">&quot;</span><span class="s1">$result</span><span class="s2">&quot;</span><span class="s3">;</span>
+
+      <span class="s3">if</span><span class="s1">(number1.endsWith(</span><span class="s2">&quot;.0&quot;</span><span class="s1">)){</span>
+        <span class="s1">number1 = number1.substring(</span><span class="s4">0</span><span class="s3">, </span><span class="s1">number1.length - </span><span class="s4">2</span><span class="s1">)</span><span class="s3">;</span>
+      <span class="s1">}</span>
+      <span class="s1">operand=</span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+      <span class="s1">number2=</span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+
+    <span class="s1">})</span><span class="s3">;</span>
+  <span class="s1">}</span>
+
+  <span class="s0">//############</span>
+  <span class="s0">//converts output to %</span>
+  <span class="s3">void </span><span class="s1">convertToPercentage() {</span>
+    <span class="s0">//ex: 456+654</span>
+    <span class="s3">if </span><span class="s1">(number1.isNotEmpty &amp;&amp; operand.isNotEmpty &amp;&amp; number2.isNotEmpty) {</span>
+      <span class="s0">//calculate before conversion</span>
+      <span class="s1">calculate()</span><span class="s3">;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">if </span><span class="s1">(operand.isNotEmpty) {</span>
+      <span class="s0">//cannot be converted</span>
+      <span class="s3">return;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">final </span><span class="s1">number = double.parse(number1)</span><span class="s3">;</span>
+    <span class="s1">setState(() {</span>
+      <span class="s1">number1 = </span><span class="s2">&quot;</span><span class="s1">${(number / </span><span class="s4">100</span><span class="s1">)}</span><span class="s2">&quot;</span><span class="s3">;</span>
+      <span class="s1">operand = </span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+      <span class="s1">number2 = </span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+    <span class="s1">})</span><span class="s3">;</span>
+  <span class="s1">}</span>
+
+  <span class="s0">//##########</span>
+  <span class="s0">//clears all output</span>
+  <span class="s3">void </span><span class="s1">clearAll() {</span>
+    <span class="s1">setState(() {</span>
+      <span class="s1">number1 = </span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+      <span class="s1">operand = </span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+      <span class="s1">number2 = </span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+    <span class="s1">})</span><span class="s3">;</span>
+  <span class="s1">}</span>
+
+
+  <span class="s0">//#############</span>
+  <span class="s0">//delete one from the end</span>
+  <span class="s3">void </span><span class="s1">delete() {</span>
+    <span class="s3">if </span><span class="s1">(number2.isNotEmpty) {</span>
+      <span class="s0">//31215 =&gt;3121</span>
+      <span class="s1">number2 = number2.substring(</span><span class="s4">0</span><span class="s3">, </span><span class="s1">number2.length - </span><span class="s4">1</span><span class="s1">)</span><span class="s3">;</span>
+    <span class="s1">} </span><span class="s3">else if </span><span class="s1">(operand.isNotEmpty) {</span>
+      <span class="s1">operand = </span><span class="s2">&quot;&quot;</span><span class="s3">;</span>
+    <span class="s1">} </span><span class="s3">else if </span><span class="s1">(number1.isNotEmpty) {</span>
+      <span class="s1">number1 = number1.substring(</span><span class="s4">0</span><span class="s3">, </span><span class="s1">number1.length - </span><span class="s4">1</span><span class="s1">)</span><span class="s3">;</span>
+    <span class="s1">}</span>
+    <span class="s1">setState(() {})</span><span class="s3">;</span>
+  <span class="s1">}</span>
+
+  <span class="s0">//#################</span>
+  <span class="s0">//appends value to the ena</span>
+  <span class="s3">void </span><span class="s1">appendValue(String value) {</span>
+    <span class="s0">//number1 operand number2</span>
+    <span class="s0">//234        +     5343</span>
+    <span class="s0">// if is operand and not &quot;.&quot;</span>
+    <span class="s3">if </span><span class="s1">(value != Btn.dot &amp;&amp; int.tryParse(value) == </span><span class="s3">null</span><span class="s1">) {</span>
+      <span class="s0">// operand pressed</span>
+      <span class="s3">if </span><span class="s1">(operand.isNotEmpty &amp;&amp; number2.isNotEmpty) {</span>
+        <span class="s0">//TODO calculate the equation before assigning new operand</span>
+        <span class="s1">calculate()</span><span class="s3">;</span>
+      <span class="s1">}</span>
+      <span class="s1">operand = value</span><span class="s3">;</span>
+    <span class="s1">}</span>
+    <span class="s0">// assign value to number1 variable</span>
+    <span class="s3">else if </span><span class="s1">(number1.isEmpty || operand.isEmpty) {</span>
+      <span class="s0">//check if value is &quot;.&quot; | ex: number1 = &quot;1.2&quot;</span>
+      <span class="s3">if </span><span class="s1">(value == Btn.dot &amp;&amp; number1.contains(Btn.dot)) </span><span class="s3">return;</span>
+      <span class="s3">if </span><span class="s1">(value == Btn.dot &amp;&amp; number1.isEmpty || number1 == Btn.n0) {</span>
+        <span class="s0">//ex: number1 = &quot;&quot; | &quot;0&quot;</span>
+        <span class="s1">value = </span><span class="s2">&quot;0.&quot;</span><span class="s3">;</span>
+      <span class="s1">}</span>
+      <span class="s1">number1 += value</span><span class="s3">;</span>
+    <span class="s1">}</span>
+    <span class="s0">// assign value to number2 variable</span>
+    <span class="s3">else if </span><span class="s1">(number2.isEmpty || operand.isNotEmpty) {</span>
+      <span class="s0">//check if value is &quot;.&quot; | ex: number1 = &quot;1.2&quot;</span>
+      <span class="s3">if </span><span class="s1">(value == Btn.dot &amp;&amp; number2.contains(Btn.dot)) </span><span class="s3">return;</span>
+      <span class="s3">if </span><span class="s1">(value == Btn.dot &amp;&amp; number2.isEmpty || number2 == Btn.n0) {</span>
+        <span class="s0">//ex: number2 = &quot;&quot; | &quot;0&quot;</span>
+        <span class="s1">value = </span><span class="s2">&quot;0.&quot;</span><span class="s3">;</span>
+      <span class="s1">}</span>
+      <span class="s1">number2 += value</span><span class="s3">;</span>
+    <span class="s1">}</span>
+    <span class="s1">setState(() {})</span><span class="s3">;</span>
+  <span class="s1">}</span>
+
+  <span class="s0">//########</span>
+
+  <span class="s1">Color getBtnColor(value) {</span>
+    <span class="s3">return </span><span class="s1">[Btn.del</span><span class="s3">, </span><span class="s1">Btn.clr</span><span class="s3">, </span><span class="s1">Btn.per].contains(value) ? Colors.white54 :</span>
+    <span class="s1">[</span>
+      <span class="s1">Btn.n0</span><span class="s3">,</span>
+      <span class="s1">Btn.n1</span><span class="s3">,</span>
+      <span class="s1">Btn.n2</span><span class="s3">,</span>
+      <span class="s1">Btn.n3</span><span class="s3">,</span>
+      <span class="s1">Btn.n4</span><span class="s3">,</span>
+      <span class="s1">Btn.n5</span><span class="s3">,</span>
+      <span class="s1">Btn.n6</span><span class="s3">,</span>
+      <span class="s1">Btn.n7</span><span class="s3">,</span>
+      <span class="s1">Btn.n8</span><span class="s3">,</span>
+      <span class="s1">Btn.n9</span><span class="s3">,</span>
+      <span class="s1">Btn.dot</span>
+    <span class="s1">].contains(value) ? Colors.white70 :</span>
+    <span class="s1">[</span>
+      <span class="s1">Btn.multiply</span><span class="s3">,</span>
+      <span class="s1">Btn.add</span><span class="s3">,</span>
+      <span class="s1">Btn.subtract</span><span class="s3">,</span>
+      <span class="s1">Btn.divide</span><span class="s3">,</span>
+      <span class="s1">Btn.calculate</span><span class="s3">,</span>
+    <span class="s1">].contains(value) ? Colors.deepPurple : Colors.black87</span><span class="s3">;</span>
+  <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
